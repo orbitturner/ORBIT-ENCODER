@@ -21,14 +21,13 @@
 
 ___
 ## 📚 Table Of Contents 📑
-- [🟢 PIFS 🔎](#---PISF---)
-  * [📚 Table Of Contents 📑](#---table-of-contents---)
-  * [💨 What is this Library for? 🤔](#---what-is-this-library-for----)
-  * [✨ Key Features 🎯](#--key-features---)
-  * [📥 HOW TO RUN IT ? 🔰](#---how-to-run-it-----)
-  * [🤔 HOW IT WORKS ? 🤔](#---how-it-works-----)
-  * [⚙ Usage: SERVER CONNECTION PARAMS 🎚](#--usage--server-connection-params---)
-    + [➤ Open The SFTP-UPLOADER File 🟢](#--open-the-sftp-uploader-file---)
+- [🟢 ORBIT ENCODER ⚙️🗜️](#orbit-encoder)
+  * [📚 Table Of Contents 📑](#table-of-contents)
+  * [💨 What is this Library for? 🤔](#what-is-this-library-for)
+  * [✨ Key Features 🎯](#key-features---)
+  * [📥 HOW TO RUN IT ? 🔰](#how-to-run-it)
+  * [🤔 HOW IT WORKS ? 🤔](#how-it-works)
+    + [➤ Encode & Decode Given Data 🟢](#encode---decode-given-data)
   * [Configuration Options](#configuration-options)
   * [Contributing ❤](#contributing--)
   * [Issue Reporting](#issue-reporting)
@@ -75,22 +74,65 @@ ___
 
 You only need to Import the ***OrbitEncoder*** Class from the Package and start using it !
 
-### ➤ Encode Given Data 🟢
-
-👇🏾 Let's Encode an Array of Objects :
-
-```typescript
-    # Configurer les options de session
-    $sessionOptions = New-Object WinSCP.SessionOptions -Property @{
-        Protocol = [WinSCP.Protocol]::Ftp
-        HostName = "XXX.XXX.XXX.XXX"
-        UserName = "USERNAME"
-        Password = "*********"
-        FtpSecure = [WinSCP.FtpSecure]::Implicit # DON'T TOUCH THAT LINE.
-        TlsHostCertificateFingerprint = "GET IT FROM WINSCP GENERATE SCRIPT PANEL"
-    }
+### ➤ Encode & Decode Given Data 🟢
+If you have a User object as follows ->
+```json
+const User = {
+    "name": "Orbit",
+    "age": 21,
+    "planet": {
+        "id": 4,
+        "codename" : "Shadow-Coders",
+        "galaxyName" : "Turner"
+    }   
+}
 ```
-> **⚠ Note: ⚠** This script is made for `Developers` and Only For `SFTP Implicit servers` because it's hard to find a programmatical way to do such thing 🚨. You can easily tweak to fit your desires.
+👇🏾 Let's Encode and Decode an Objects :
+
+- **ECMAScript Modules and Typescript** 
+```typescript
+    import {OrbitEncoder} from 'orbit-encoder/lib/OrbitEncoder';
+
+    // Then Encode whatever you want
+    const encodedData = OrbitEncoder.encode(User);
+
+    console.log(encodedData);
+    /**
+     * 👇🏾 Output: 👇🏾
+     * 
+     * ᓢ㰴䅼ী甤〦恩Ìߐዠᔣᣡ䂦TɈ〦⁐䰠ᘡ㐢〪僠㲪␠祶fĂ࢕⓸Ǹ͚ࣣគⵉM䀼䀻什䁕㒘攈ᢸ᣷吰ৣ乩厖亰æၩ䩴¸椮ࠢ昤怪挑䃒塐恬睂⑘䤣&㉀PƘ䀠
+     * 
+     * /
+```
+```typescript
+    ...
+    // Then Encode whatever you want
+    const decodedData = OrbitEncoder.decode(encodedData);
+
+    console.log(decodedData);
+    /**
+     * 👇🏾 Output: 👇🏾
+     * 
+     * {
+        name: 'Orbit',
+        age: 21,
+        planet: { id: 4, codename: 'Shadow-Coders', galaxyName: 'Turner' }
+      }
+     * 
+     * /
+```
+
+- **CommonJs and Vailla JS** 
+```javascript
+  const orbit = require("orbit-encoder").OrbitEncoder;
+
+  const data = orbit.encode('Bodio Bodio Yei !!');
+
+  console.log(data); // 🚀 Output :ᅢ汇ǌࢀ甠瀼橪梸恕<Ұᡠ⢠ୀ
+
+  console.log(orbit.decode(data));
+```
+> **⚠ Note: ⚠**    * You can do that : const orbit = require("orbit-encoder"); And use orbit.OrbitEncoder.encode() everywhere but for a more clean approach I did the  code above.
 
 ___
 ## Configuration Options
