@@ -17,6 +17,6 @@ test('Trying to Encode Some Data with Encode Method', () => {
 
 test('Decoding Some Data', () => {
   const result = OrbitEncoder.encode(User);
-  
+
   expect(OrbitEncoder.decode(result)).toEqual(User);
 });
