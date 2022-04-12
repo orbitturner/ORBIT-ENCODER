@@ -30,8 +30,6 @@ export class OrbitEncoder {
     if (typeof obj !== 'object' && !Array.isArray(obj)) {
       // OLD DEPRECATED : return LZString.compressToUTF16(btoa(unescape(encodeURIComponent(obj))));
       return LZString.compressToUTF16(Buffer.from(obj, 'binary').toString('base64'));
-      
-
     }
     return LZString.compressToUTF16(Buffer.from(JSON.stringify(obj), 'binary').toString('base64'));
   }
