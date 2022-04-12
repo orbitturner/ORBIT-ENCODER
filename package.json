@@ -1,0 +1,47 @@
+{
+  "name": "orbit-encoder",
+  "version": "1.0.1",
+  "description": "ORBIT-ENCODER is an utility library for Data Compression and Encoding. It can take whatever object you give him as argument and returns a compressed encoded string. It provides a decoding method too. It uses a modified version of LZString for UTF16 Compression.",
+  "main": "lib/OrbitEncoder.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"core/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepublishOnly": "npm test",
+    "prepare": "npm run build",
+    "preversion": "npm run lint",
+    "xversion": "npm run format && npm --no-git-tag-version version patch",
+    "gitupdate": "git add . && git commit -m \"🟢 RELEASING V %npm_package_version% ✨\" && git push --tags ",
+    "release": "npm run xversion && npm run gitupdate && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orbitturner/ORBIT-ENCODER.git"
+  },
+  "keywords": [
+    "Encoding",
+    "Compression",
+    "Decoding",
+    "String"
+  ],
+  "author": "Orbit Turner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orbitturner/ORBIT-ENCODER/issues"
+  },
+  "homepage": "https://github.com/orbitturner/ORBIT-ENCODER#readme",
+  "files": [
+    "lib/**/*"
+  ],
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "jest": "^27.5.1",
+    "prettier": "^2.6.2",
+    "ts-jest": "^27.1.4",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.6.3"
+  }
+}

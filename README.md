@@ -5,7 +5,7 @@
 [![Issues Status](https://img.shields.io/github/issues/orbitturner/ORBIT-ENCODER)](https://github.com/orbitturner/ORBIT-ENCODER)
 [![npm version](https://img.shields.io/npm/v/ORBIT-ENCODER.svg)](https://github.com/orbitturner/ORBIT-ENCODER) [![license](https://img.shields.io/npm/l/ORBIT-ENCODER.svg)](https://github.com/orbitturner/ORBIT-ENCODER)
 
-**ORBIT-ENCODER** is an utility library for Data Compression and Encoding. It can take whatever object you gave him as argument and returns a compressed encoded string. It provides a decoding method too. It uses a modified version of  for UTF16 Compression [*LZString*](https://www.npmjs.com/package/lz-string).
+**ORBIT-ENCODER** is an utility library for Data Compression and Encoding. It can take whatever object you give him as argument and returns a compressed encoded string. It provides a decoding method too. It uses a modified version of [*LZString*](https://www.npmjs.com/package/lz-string) for UTF16 Compression.
 
 <p align="center">
   <a href="http://orbitturner.com/"><img src="./.repo-assets/images/GITHUB REPOS COVER.gif" width="auto" alt="ORBIT-ENCODER COVER"/></a>
