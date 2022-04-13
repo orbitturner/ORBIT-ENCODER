@@ -12,11 +12,16 @@ const User = {
 
 test('Trying to Encode Some Data with Encode Method', () => {
   const result = OrbitEncoder.encode(User);
-  expect(typeof OrbitEncoder.encode(User)).toBe('string');
+  expect(typeof result).toBe('string');
 });
 
-test('Decoding Some Data', () => {
-  const result = OrbitEncoder.encode(User);
+test('Trying to Encode With URI SAFE', () => {
+  const result = OrbitEncoder.encodeWithURIsafe(User);
+  expect(typeof result).toBe('string');
+});
 
-  expect(OrbitEncoder.decode(result)).toEqual(User);
+test('Decoding With URI SAFE', () => {
+  const result = OrbitEncoder.encodeWithURIsafe(User);
+
+  expect(OrbitEncoder.decodeURIsafe(result)).toEqual(User);
 });

@@ -112,7 +112,7 @@ export let LZString = (() => {
     },
 
     // compress into a string that is already URI encoded
-    compressToEncodedURIComponent(input: null): any {
+    compressToEncodedURIComponent(input: any): any {
       if (input == null) {
         return '';
       }

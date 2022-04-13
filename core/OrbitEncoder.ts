@@ -20,24 +20,38 @@ global.Buffer = global.Buffer || Buffer;
 
 export class OrbitEncoder {
   /**
-   * ENCODING OBJECT TO BASE64.
+   * ENCODING & COMPRESSING OBJECT TO UTF16 STRING.
    *
    * Since everything is an object in Javascript this will
    * encode whatever you give it in Base64 then Compress it to an UTF16 String.
    *
-   * btoa(): creates a Base64-encoded ASCII string from a "string" of binary data ("btoa" should be read as "binary to ASCII").
    * @see: https://developer.mozilla.org/en-US/docs/Glossary/Base64
    */
   public static encode(obj: any): any {
     if (typeof obj !== 'object' && !Array.isArray(obj)) {
+      //btoa(): creates a Base64-encoded ASCII string from a "string" of binary data ("btoa" should be read as "binary to ASCII").
       // OLD DEPRECATED : return LZString.compressToUTF16(btoa(unescape(encodeURIComponent(obj))));
       return LZString.compressToUTF16(Buffer.from(obj, 'binary').toString('base64'));
     }
     return LZString.compressToUTF16(Buffer.from(JSON.stringify(obj), 'binary').toString('base64'));
   }
+  /**
+   * ENCODING & COMPRESSING OBJECT FOR URISAFE STRING.
+   *
+   * produces ASCII strings representing the original string encoded in Base64 with a few tweaks to make these URI safe. 
+   * Hence, you can send them to the server without thinking about URL encoding them. This saves bandwidth and CPU.
+   *
+   * @see: https://developer.mozilla.org/en-US/docs/Glossary/Base64
+   */
+  public static encodeWithURIsafe(obj: any): any {
+    if (typeof obj !== 'object' && !Array.isArray(obj)) {
+      return LZString.compressToEncodedURIComponent(Buffer.from(obj, 'binary').toString('base64'));
+    }
+    return LZString.compressToEncodedURIComponent(Buffer.from(JSON.stringify(obj), 'binary').toString('base64'));
+  }
 
   /**
-   * DECODING BASE64.
+   * DECODING OBJECT TO UTF16 STRING.
    *
    * Since everything is an object in Javascript this will
    * decode whatever in Base64 you give it.
@@ -47,10 +61,23 @@ export class OrbitEncoder {
   public static decode(obj: any): any {
     try {
       return JSON.parse(Buffer.from(LZString.decompressFromUTF16(obj), 'base64').toString('binary'));
-      // * atob(): decodes a Base64-encoded string("atob" should be read as "ASCII to binary").
-      // DEPRECATED : return JSON.parse(decodeURIComponent(escape(atob(LZString.decompressFromUTF16(obj)))));
     } catch {
       return Buffer.from(LZString.decompressFromUTF16(obj), 'base64').toString('binary');
+    }
+  }
+
+  /**
+   * DECODING OBJECT FOR URISAFE STRING.
+   *
+   * 
+   *
+   * @see: https://developer.mozilla.org/en-US/docs/Glossary/Base64
+   */
+  public static decodeURIsafe(obj: any): any {
+    try {
+      return JSON.parse(Buffer.from(LZString.decompressFromEncodedURIComponent(obj), 'base64').toString('binary'));
+    } catch {
+      return Buffer.from(LZString.decompressFromEncodedURIComponent(obj), 'base64').toString('binary');
     }
   }
 }
