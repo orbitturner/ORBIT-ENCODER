@@ -121,6 +121,14 @@ const User = {
      * 
      * /
 ```
+**🛑 ANGULAR & FRONTEND USERS ☢️**
+> **Note:** If you are using this in your frontend application you'll need to add the folowing line in your `index.html` 👇🏾:.
+```html
+    <script> if (global === undefined) { var global = window; } </script>
+```
+> **FIX COMING:** We are working on Future updates that will try to fix this error [*Uncaught ReferenceError: global is not defined*].
+
+
 
 - **CommonJs and Vailla JS** 
 ```javascript
