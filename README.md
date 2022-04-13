@@ -106,7 +106,6 @@ const User = {
 ```
 ```typescript
     ...
-    // Then Encode whatever you want
     const decodedData = OrbitEncoder.decode(encodedData);
 
     console.log(decodedData);
@@ -141,6 +140,53 @@ const User = {
   console.log(orbit.decode(data));
 ```
 > **⚠ Note: ⚠**    * You can do that : const orbit = require("orbit-encoder"); And use orbit.OrbitEncoder.encode() everywhere but for a more clean approach I did the  code above.
+
+
+### ➤ Encode & Decode Data Passed on URI 🟢
+Sometimes you may want to pass some heavy and complex data or datastructure in a URL, so you can use the `encodeWithURIsafe` method. It produces ASCII strings representing the original string encoded in Base64 with a few tweaks to make these URI safe. Hence, you can send them to the server without thinking about URL encoding them. 
+This saves bandwidth and CPU.
+
+- **ECMAScript Modules and Typescript** 
+```typescript
+    import {OrbitEncoder} from 'orbit-encoder/lib/OrbitEncoder';
+
+    const data = [['2021-03-02','2021-06-02'],['2022-05-05','2021-07-01']];
+
+    // Then Encode whatever you want
+    const encodedData = OrbitEncoder.encodeWithURIsafe(data);
+
+    console.log(dataForURI);
+
+    /**
+     * 👇🏾 Output: 👇🏾
+     * 
+     * OoRgzglgsgVgggTygZQAwHcoI1CBJMPGPTGAUQBcoARATSurwgA1kAPAIyJNjwYFUBEADIBhPEkZthAFTgBmWXDZ4ANiAAmQA
+     * 
+     * /
+```
+```typescript
+    ...
+    const decodedData = OrbitEncoder.decodeURIsafe(encodedData);
+
+    console.log(decodedData);
+    /**
+     * 👇🏾 Output: 👇🏾
+     * 
+     * [ [ '2021-03-02', '2021-06-02' ], [ '2022-05-05', '2021-07-01' ] ]
+     * 
+     * /
+```
+- **CommonJs and Vanilla JS** 
+```javascript
+  const orbit = require("orbit-encoder").OrbitEncoder;
+
+
+  const dataForURI = orbit.encodeWithURIsafe([['2021-03-02','2021-06-02'],['2022-05-05','2021-07-01']]);
+
+  console.log(dataForURI) // 🚀 Output : OoRgzglgsgVgggTygZQAwHcoI1CBJMPGPTGAUQBcoARATSurwgA1kAPAIyJNjwYFUBEADIBhPEkZthAFTgBmWXDZ4ANiAAmQA
+  
+  console.log(orbit.decodeURIsafe(dataForURI))
+```
 
 ___
 ## Configuration Options
