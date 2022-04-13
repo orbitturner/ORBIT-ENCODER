@@ -29,17 +29,16 @@ export class OrbitEncoder {
    */
   public static encode(obj: any): any {
     if (typeof obj !== 'object' && !Array.isArray(obj)) {
-      //btoa(): creates a Base64-encoded ASCII string from a "string" of binary data ("btoa" should be read as "binary to ASCII").
-      // OLD DEPRECATED : return LZString.compressToUTF16(btoa(unescape(encodeURIComponent(obj))));
       return LZString.compressToUTF16(Buffer.from(obj, 'binary').toString('base64'));
     }
     return LZString.compressToUTF16(Buffer.from(JSON.stringify(obj), 'binary').toString('base64'));
   }
   /**
-   * ENCODING & COMPRESSING OBJECT FOR URISAFE STRING.
+   * ENCODING & COMPRESSING OBJECT FOR AN URI SAFE STRING.
    *
-   * produces ASCII strings representing the original string encoded in Base64 with a few tweaks to make these URI safe. 
-   * Hence, you can send them to the server without thinking about URL encoding them. This saves bandwidth and CPU.
+   * produces ASCII strings representing the original string encoded in Base64 with a few tweaks to make these URI safe.
+   * Hence, you can send them to the server without thinking about URL encoding them.
+   * This saves bandwidth and CPU.
    *
    * @see: https://developer.mozilla.org/en-US/docs/Glossary/Base64
    */
@@ -51,7 +50,7 @@ export class OrbitEncoder {
   }
 
   /**
-   * DECODING OBJECT TO UTF16 STRING.
+   * DECODING STRING CREATED WITH 'encode' Method.
    *
    * Since everything is an object in Javascript this will
    * decode whatever in Base64 you give it.
@@ -67,9 +66,7 @@ export class OrbitEncoder {
   }
 
   /**
-   * DECODING OBJECT FOR URISAFE STRING.
-   *
-   * 
+   * DECODING OBJECT CREATED BY 'encodeWithURIsafe' METHOD.
    *
    * @see: https://developer.mozilla.org/en-US/docs/Glossary/Base64
    */

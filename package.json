@@ -1,6 +1,6 @@
 {
   "name": "orbit-encoder",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "ORBIT-ENCODER is an utility library for Data Compression and Encoding. It can take whatever object you give him as argument and returns a compressed encoded string. It provides a decoding method too. It uses a modified version of LZString for UTF16 Compression.",
   "main": "lib/OrbitEncoder.js",
   "types": "lib/index.d.ts",
