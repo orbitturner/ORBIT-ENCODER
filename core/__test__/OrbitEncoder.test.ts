@@ -1,4 +1,5 @@
 import { OrbitEncoder } from '../OrbitEncoder';
+import { generateUsers } from './utils';
 
 const User = {
   name: 'Orbit',
@@ -52,4 +53,32 @@ test('Decoding With Standards-Decode', () => {
   const result = OrbitEncoder.encode(User);
 
   expect(OrbitEncoder.decode(result)).toEqual(User);
+});
+
+/// String value
+const text = 'Try to encode this';
+
+test('Trying to Encode Some Text with Raw Encode Method', () => {
+  const result = OrbitEncoder.rawEncode(text);
+  expect(typeof result).toBe('string');
+});
+
+test('Decoding With Raw-EncLZ', () => {
+  const result = OrbitEncoder.rawEncode(text);
+
+  expect(OrbitEncoder.rawDecode(result)).toEqual(text);
+});
+
+/// Test Large Data
+const Users = generateUsers(6_000);
+
+test('Trying to Encode Large Data with Raw Encode Method', () => {
+  const result = OrbitEncoder.rawEncode(Users);
+  expect(typeof result).toBe('string');
+});
+
+test('Decoding Large Data  With Raw-EncLZ', () => {
+  const encodedUsers = OrbitEncoder.rawEncode(Users);
+
+  expect(OrbitEncoder.rawDecode(encodedUsers)).toEqual(Users);
 });
