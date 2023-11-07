@@ -16,17 +16,21 @@
 /* tslint:disable:variable-name no-bitwise triple-equals */
 export let LZString = (() => {
   // private property
-  const f = String.fromCharCode;
+  const f: (a: number) => string = String.fromCharCode;
   const keyStrBase64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
   const keyStrUriSafe = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$';
-  const baseReverseDic: any = {};
+  const baseReverseDic: { [key: string]: { [key: string]: number } } = {};
 
-  function getBaseValue(alphabet: string, character: any): any {
+  function initializeBaseReverseDic(alphabet: string): void {
+    baseReverseDic[alphabet] = {};
+    for (let i = 0; i < alphabet.length; i++) {
+      baseReverseDic[alphabet][alphabet.charAt(i)] = i;
+    }
+  }
+
+  function getBaseValue(alphabet: string, character: string): number {
     if (!baseReverseDic[alphabet]) {
-      baseReverseDic[alphabet] = {};
-      for (let i = 0; i < alphabet.length; i++) {
-        baseReverseDic[alphabet][alphabet.charAt(i)] = i;
-      }
+      initializeBaseReverseDic(alphabet);
     }
     return baseReverseDic[alphabet][character];
   }
@@ -54,12 +58,8 @@ export let LZString = (() => {
     },
 
     decompressFromBase64(input: string | null): any {
-      if (input == null) {
-        return '';
-      }
-      if (input === '') {
-        return null;
-      }
+      if (input == null) return '';
+      if (input === '') return null;
       return LZString._decompress(input.length, 32, (index: any) => getBaseValue(keyStrBase64, input.charAt(index)));
     },
 
@@ -84,8 +84,8 @@ export let LZString = (() => {
     compressToUint8Array(uncompressed: any): any {
       const compressed = LZString.compress(uncompressed);
       const buf = new Uint8Array(compressed.length * 2); // 2 bytes per character
-
-      for (let i = 0, TotalLen = compressed.length; i < TotalLen; i++) {
+      const TotalLen = compressed.length;
+      for (let i = 0; i < TotalLen; i++) {
         const current_value = compressed.charCodeAt(i);
         buf[i * 2] = current_value >>> 8;
         buf[i * 2 + 1] = current_value % 256;
@@ -220,7 +220,7 @@ export let LZString = (() => {
             }
             context_enlargeIn--;
             if (context_enlargeIn == 0) {
-              context_enlargeIn = Math.pow(2, context_numBits);
+              context_enlargeIn = 1 << context_numBits;
               context_numBits++;
             }
             // @ts-ignore
@@ -242,7 +242,7 @@ export let LZString = (() => {
           }
           context_enlargeIn--;
           if (context_enlargeIn == 0) {
-            context_enlargeIn = Math.pow(2, context_numBits);
+            context_enlargeIn = 1 << context_numBits;
             context_numBits++;
           }
           // Add wc to the dictionary.
@@ -306,7 +306,7 @@ export let LZString = (() => {
           }
           context_enlargeIn--;
           if (context_enlargeIn == 0) {
-            context_enlargeIn = Math.pow(2, context_numBits);
+            context_enlargeIn = 1 << context_numBits;
             context_numBits++;
           }
           delete context_dictionaryToCreate[context_w];
@@ -326,7 +326,7 @@ export let LZString = (() => {
         }
         context_enlargeIn--;
         if (context_enlargeIn == 0) {
-          context_enlargeIn = Math.pow(2, context_numBits);
+          context_enlargeIn = 1 << context_numBits;
           context_numBits++;
         }
       }
@@ -448,7 +448,7 @@ export let LZString = (() => {
         }
 
         bits = 0;
-        maxpower = Math.pow(2, numBits);
+        maxpower = 1 << numBits;
         power = 1;
         while (power != maxpower) {
           resb = data.val & data.position;
@@ -504,7 +504,7 @@ export let LZString = (() => {
         }
 
         if (enlargeIn == 0) {
-          enlargeIn = Math.pow(2, numBits);
+          enlargeIn = 1 << numBits;
           numBits++;
         }
 
@@ -527,11 +527,12 @@ export let LZString = (() => {
         w = entry;
 
         if (enlargeIn == 0) {
-          enlargeIn = Math.pow(2, numBits);
+          enlargeIn = 1 << numBits;
           numBits++;
         }
       }
     },
   };
+
   return LZString;
 })();

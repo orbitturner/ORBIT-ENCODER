@@ -31,10 +31,8 @@ export class OrbitEncoder {
    * @see: https://developer.mozilla.org/en-US/docs/Glossary/Base64
    */
   public static encode(obj: any): any {
-    if (typeof obj !== 'object' && !Array.isArray(obj)) {
-      return LZString.compressToUTF16(Buffer.from(obj, 'binary').toString('base64'));
-    }
-    return LZString.compressToUTF16(Buffer.from(JSON.stringify(obj), 'binary').toString('base64'));
+    const input = typeof obj !== 'object' && !Array.isArray(obj) ? obj : JSON.stringify(obj);
+    return LZString.compressToUTF16(Buffer.from(input, 'binary').toString('base64'));
   }
   /**
    * ENCODING & COMPRESSING OBJECT FOR AN URI SAFE STRING.
@@ -46,10 +44,8 @@ export class OrbitEncoder {
    * @see: https://developer.mozilla.org/en-US/docs/Glossary/Base64
    */
   public static encodeWithURIsafe(obj: any): any {
-    if (typeof obj !== 'object' && !Array.isArray(obj)) {
-      return LZString.compressToEncodedURIComponent(Buffer.from(obj, 'binary').toString('base64'));
-    }
-    return LZString.compressToEncodedURIComponent(Buffer.from(JSON.stringify(obj), 'binary').toString('base64'));
+    const input = typeof obj !== 'object' && !Array.isArray(obj) ? obj : JSON.stringify(obj);
+    return LZString.compressToEncodedURIComponent(Buffer.from(input, 'binary').toString('base64'));
   }
 
   /**
@@ -62,12 +58,10 @@ export class OrbitEncoder {
    * USE IT CAREFULLY !
    */
   public static rawEncode(obj: any): any {
-    if (typeof obj !== 'object' && !Array.isArray(obj)) {
-      return LZString.compress(obj);
-    }
-    return LZString.compress(JSON.stringify(obj));
+    return typeof obj !== 'object' && !Array.isArray(obj)
+      ? LZString.compress(obj)
+      : LZString.compress(JSON.stringify(obj));
   }
-
   /**
    * ENCODING & COMPRESSING OBJECT Using Directly CompressUTF16 of LZ_STRING.
    *
@@ -78,10 +72,9 @@ export class OrbitEncoder {
    * USE IT CAREFULLY !
    */
   public static rawEncodeUTF16(obj: any): any {
-    if (typeof obj !== 'object' && !Array.isArray(obj)) {
-      return LZString.compressToUTF16(obj);
-    }
-    return LZString.compressToUTF16(JSON.stringify(obj));
+    return typeof obj !== 'object' && !Array.isArray(obj)
+      ? LZString.compressToUTF16(obj)
+      : LZString.compressToUTF16(JSON.stringify(obj));
   }
 
   // =======================================================================
@@ -97,7 +90,8 @@ export class OrbitEncoder {
    */
   public static decode(obj: any): any {
     try {
-      return JSON.parse(Buffer.from(LZString.decompressFromUTF16(obj), 'base64').toString('binary'));
+      const decodedString = Buffer.from(LZString.decompressFromUTF16(obj), 'base64').toString('binary');
+      return JSON.parse(decodedString);
     } catch {
       return Buffer.from(LZString.decompressFromUTF16(obj), 'base64').toString('binary');
     }
@@ -110,7 +104,8 @@ export class OrbitEncoder {
    */
   public static decodeURIsafe(obj: any): any {
     try {
-      return JSON.parse(Buffer.from(LZString.decompressFromEncodedURIComponent(obj), 'base64').toString('binary'));
+      const decodedString = Buffer.from(LZString.decompressFromEncodedURIComponent(obj), 'base64').toString('binary');
+      return JSON.parse(decodedString);
     } catch {
       return Buffer.from(LZString.decompressFromEncodedURIComponent(obj), 'base64').toString('binary');
     }
