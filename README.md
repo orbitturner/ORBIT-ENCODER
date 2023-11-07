@@ -48,7 +48,7 @@ ___
 
 ## ✨ Key Features 🎯
 
-* Use it **without `Instanciation`**  because all the methods are `Static`.
+* Use it **without `instantiation`**  because all the methods are `Static`.
 * **Fast and High Performance Compression** of big Complex Data.
 * ✅ TOO EASY TO USE !! 🥳🥳
 
@@ -129,7 +129,7 @@ const User = {
 
 
 
-- **CommonJs and Vailla JS** 
+- **CommonJs and Vanilla JS** 
 ```javascript
   const orbit = require("orbit-encoder").OrbitEncoder;
 
