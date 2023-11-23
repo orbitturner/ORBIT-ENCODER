@@ -104,9 +104,9 @@ export let LZString = (() => {
         }
 
         const result: string[] = [];
-        buf.forEach((c: number) => {
+        for (const c of buf) {
           result.push(f(c));
-        });
+        }
         return LZString.decompress(result.join(''));
       }
     },

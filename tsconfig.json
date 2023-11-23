@@ -8,5 +8,5 @@
       "allowJs": true,
     },
     "include": ["core"],
-    "exclude": ["node_modules", "**/__tests__/*"]
+    "exclude": ["node_modules", "core/**/*.test.ts", "core/**/utils.ts"]
   }
